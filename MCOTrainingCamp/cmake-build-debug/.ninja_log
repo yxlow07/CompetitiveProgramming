@@ -1,0 +1,7 @@
+# ninja log v5
+3	1546	7248260313771766	CMakeFiles/MCOTrainingCamp.dir/main.cpp.obj	cd75eaffa10f0e8c
+1547	1789	7248260316153137	MCOTrainingCamp.exe	f07b40d1a8279b4
+5	43	7246659957258029	CMakeFiles/MCOTrainingCamp.dir/magicpowder.cpp.obj	2b2d5d4506fcdbe9
+1	148	7269398935779964	build.ninja	2b0a14d14822619a
+7	38	7246587998076994	CMakeFiles/MCOTrainingCamp.dir/bs.cpp.obj	3ae38dbb710b0d03
+5	35	7246587998047092	CMakeFiles/MCOTrainingCamp.dir/atcoder.cpp.obj	e75f1f223149ff8e
