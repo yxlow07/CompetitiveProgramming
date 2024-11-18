@@ -82,7 +82,10 @@ void fast(const string &file = "") {
 }
 
 void solve() {
-    
+    int n,m,r,c; cin>>n>>m>>r>>c; int dist = 0;
+    dist += (m-c);
+    dist += (n-r)*(m+m-1);
+    cout<<dist<<nl;
 }
 
 signed main() {
