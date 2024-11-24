@@ -1,6 +1,7 @@
 // Author: Yu Xuan
-// Created On: 03 09 2024 - 14:54:12
-// File: template
+// Created On: 22 11 2024 - 16:03:35
+// File: 2037A
+// Link: https://codeforces.com/contest/2037/problem/A
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -13,10 +14,9 @@ using namespace std;
 
 void fast(const string &file = "") {
     ios::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr);
-    cout<<fixed<<setprecision(12);
+    cout<<fixed<<setprecision(12); 
     if (!file.empty()) { (void) !freopen((file + ".in").c_str(), "r", stdin); (void) !freopen((file + ".out").c_str(), "w", stdout); }
-    #ifdef LOCAL
-        #include <filesystem>
+    #ifndef ONLINE_JUDGE
         string current_path = filesystem::current_path().string();
         freopen((current_path+"/inp.txt").c_str(), "r", stdin);
         freopen((current_path+"/out.txt").c_str(), "w", stdout);
@@ -25,7 +25,14 @@ void fast(const string &file = "") {
 }
 
 void solve() {
-
+    int n, x; cin>>n;
+    map<int,int> mp;
+    ff(i, 0, n-1) cin>>x, mp[x]++;
+    int ans = 0;
+    loop(a, mp) {
+        ans += a.second/2;
+    }
+    cout<<ans<<nl;
 }
 
 signed main() {
@@ -33,4 +40,3 @@ signed main() {
     int tt = 1; cin>>tt;
     while (tt--) solve();
 }
-
