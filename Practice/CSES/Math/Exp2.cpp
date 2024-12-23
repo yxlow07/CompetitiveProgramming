@@ -1,7 +1,7 @@
 // Author: Yu Xuan
 // Created On: 09 12 2024 - 21:55:45
 // File: Exp2
-// Link: 
+// Link: https://cses.fi/problemset/task/1712
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -11,6 +11,20 @@ using namespace std;
 #define fb(i,b,a) for(int i=b;i>=a;i--)
 #define loop(a, b) for (auto &a : b)
 #define nl '\n'
+
+#define debug(x) cerr << #x <<" "; _print(x); cerr << endl;
+
+template <class T> void _print(const T t) { cerr << t; }
+template <class T, class V> void _print(const pair <T, V> p);
+template <class T> void _print(const vector <T> v);
+template <class T> void _print(const set <T> v);
+template <class T, class V> void _print(const map <T, V> v);
+template <class T> void _print(const multiset <T> v);
+template <class T, class V> void _print(const pair <T, V> p) {cerr << "{"; _print(p.first); cerr << ","; _print(p.second); cerr << "}";}
+template <class T> void _print(const vector <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
+template <class T> void _print(const set <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
+template <class T> void _print(const multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
+template <class T, class V> void _print(const map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}
 
 void fast(const string &file = "") {
     ios::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr);
@@ -25,8 +39,23 @@ void fast(const string &file = "") {
     #endif
 }
 
-void solve() {
+int MOD = 1e9+7;
 
+int fastExp(int a, int b, int mod) {
+    if (a == 0 && b == 0) return 1;
+    a %= mod;
+    int res = 1;
+    while (b > 0) {
+        if (b & 1) res = (res*a)%mod;
+        a = (a*a)%mod;
+        b >>= 1;
+    }
+    return res;
+}
+
+void solve() {
+    int a,b,c; cin>>a>>b>>c;
+    cout<<fastExp(a, fastExp(b,c, MOD-1), MOD)<<nl;
 }
 
 signed main() {

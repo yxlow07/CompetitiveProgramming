@@ -1,7 +1,7 @@
 // Author: Yu Xuan
 // Created On: 05 12 2024 - 21:46:23
 // File: 1971C
-// Link: 
+// Link: https://codeforces.com/problemset/problem/1971/C
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -26,7 +26,11 @@ void fast(const string &file = "") {
 }
 
 void solve() {
-
+    int a,b,c,d; cin>>a>>b>>c>>d;
+    if (c > d) swap(c,d);
+    if (a > b) swap(a,b);
+    if ((a<c && c<b && b<d)||(c < a && a < d && d < b)) cout<<"YES"<<nl;
+    else cout<<"NO"<<nl;
 }
 
 signed main() {

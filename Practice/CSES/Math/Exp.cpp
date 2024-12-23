@@ -1,7 +1,7 @@
 // Author: Yu Xuan
 // Created On: 09 12 2024 - 21:49:34
 // File: Exp
-// Link: 
+// Link: https://cses.fi/problemset/task/1095
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -25,8 +25,18 @@ void fast(const string &file = "") {
     #endif
 }
 
-void solve() {
+int MOD = 1e9+7;
 
+int fastExp(int a, int b) {
+    if (b == 0) return 1;
+    int res = fastExp(a, b/2);
+    if (b % 2 == 0) return (res*res)%MOD;
+    return (((res*res)%MOD)*a)%MOD;
+}
+
+void solve() {
+    int a,b; cin>>a>>b;
+    cout<<fastExp(a,b)<<nl;
 }
 
 signed main() {

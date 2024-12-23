@@ -1,7 +1,7 @@
 // Author: Yu Xuan
 // Created On: 30 11 2024 - 20:00:08
 // File: A
-// Link: 
+// Link: https://atcoder.jp/contests/abc382/tasks/abc382_a
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -26,12 +26,18 @@ void fast(const string &file = "") {
 }
 
 void solve() {
-
+    int n, d; cin>>n>>d;
+    string s; cin>>s; int count = 0, empty = 0;
+    ff(i, 0, n-1) {
+        if (s[i] == '@') count++;
+        else empty++;
+    }
+    cout<<empty+d<<nl;
 }
 
 signed main() {
     fast();
     int tt = 1; 
-    cin>>tt;
+//    cin>>tt;
     while (tt--) solve();
 }

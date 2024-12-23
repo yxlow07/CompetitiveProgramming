@@ -1,7 +1,7 @@
 // Author: Yu Xuan
 // Created On: 16 12 2024 - 20:28:13
 // File: Labyrinth
-// Link: 
+// Link: https://cses.fi/problemset/task/1193
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -13,7 +13,6 @@ using namespace std;
 #define nl '\n'
 
 #define debug(x) cerr << #x <<" "; _print(x); cerr << endl;
-
 template <class T> void _print(const T t) { cerr << t; }
 template <class T, class V> void _print(const pair <T, V> p);
 template <class T> void _print(const vector <T> v);
@@ -39,13 +38,66 @@ void fast(const string &file = "") {
     #endif
 }
 
-void solve() {
+int dx[] = {0, 0, 1, -1};
+int dy[] = {1, -1, 0, 0};
 
+void solve() {
+    int n, m; cin>>n>>m; vector<vector<char>> grid(n, vector<char>(m));
+    pair<int, int> start, end;
+    ff(i, 0, n-1) {
+        ff(j, 0, m-1) {
+            cin >> grid[i][j];
+            if (grid[i][j] == 'A') start = {i, j};
+            if (grid[i][j] == 'B') end = {i, j};
+        }
+    }
+    // BFS starting on start
+    bool found = false;
+    vector<vector<bool>> visited(n, vector<bool>(m, false));
+    queue<pair<int, int>> q; q.push(start); visited[start.first][start.second] = true;
+    vector<vector<pair<int, int>>> parent(n, vector<pair<int, int>>(m, {-1, -1}));
+    parent[start.first][start.second] = {0, 0};
+    while (!q.empty()) {
+        if (q.front() == end) {
+            found = true; break;
+        }
+        pair<int, int> curr = q.front(); q.pop();
+        int x = curr.first, y = curr.second;
+        ff(i, 0, 3) {
+            int nx = x + dx[i], ny = y + dy[i];
+            if (nx >= 0 && nx < n && ny >= 0 && ny < m && !visited[nx][ny] && grid[nx][ny] != '#') {
+                parent[nx][ny] = {x, y};
+                visited[nx][ny] = true;
+                q.emplace(nx, ny);
+            }
+        }
+    }
+    if (!found) {
+        cout<<"NO"<<nl;
+        return;
+    } else {
+        cout<<"YES"<<nl;
+        // Reconstruction
+        string path = "";
+        while (end != start) {
+            pair<int, int> prev = parent[end.first][end.second];
+            if (prev.first == end.first) {
+                if (prev.second < end.second) path += 'R';
+                else path += 'L';
+            } else {
+                if (prev.first < end.first) path += 'D';
+                else path += 'U';
+            }
+            end = prev;
+        }
+        reverse(path.begin(), path.end());
+        cout<<path.size()<<nl<<path<<nl;
+    }
 }
 
 signed main() {
     fast();
     int tt = 1; 
-    cin>>tt;
+//    cin>>tt;
     while (tt--) solve();
 }

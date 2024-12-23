@@ -1,7 +1,7 @@
 // Author: Yu Xuan
 // Created On: 13 12 2024 - 18:49:31
 // File: BookShop
-// Link: 
+// Link: https://cses.fi/problemset/task/1158
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -40,12 +40,28 @@ void fast(const string &file = "") {
 }
 
 void solve() {
-
+    int n, x; cin>>n>>x; int h[n], s[n]; ff(i, 0, n-1) cin>>h[i];
+    ff(i, 0, n-1) cin>>s[i];
+    vector<int> dp(x+1, 0);
+    /*
+     * let dp[i] = maximum number of pages that can be bought with i money
+     * state transition: dp[i] = max(dp[i], dp[i-h[j]]+s[j])
+     *  - case 1: don't buy book i => dp[i]
+     *  - case 2: buy book i => dp[i-h[j]]+s[j]
+     * base case: dp[0] = 0
+     * answer: max(dp)
+    */
+    ff(i, 0, n-1) {
+        fb(j, x, h[i]) {
+            dp[j] = max(dp[j], dp[j-h[i]]+s[i]);
+        }
+    }
+    cout<<dp[x]<<nl;
 }
 
 signed main() {
     fast();
     int tt = 1; 
-    cin>>tt;
+//    cin>>tt;
     while (tt--) solve();
 }

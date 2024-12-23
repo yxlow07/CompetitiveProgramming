@@ -1,7 +1,7 @@
 // Author: Yu Xuan
 // Created On: 16 12 2024 - 20:56:20
 // File: BuildingRoad
-// Link: 
+// Link: https://cses.fi/problemset/task/1666
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -39,13 +39,39 @@ void fast(const string &file = "") {
     #endif
 }
 
-void solve() {
+vector<vector<int>> adj;
+vector<bool> visited;
 
+void dfs(int u) {
+    visited[u] = true;
+    loop(v, adj[u]) {
+        if (!visited[v]) dfs(v);
+    }
+}
+
+void solve() {
+    int n, m, a, b; cin>>n>>m; adj.resize(n+1); visited.resize(n+1, false);
+    ff(i, 1, m) {
+        cin>>a>>b;
+        adj[a].push_back(b); adj[b].push_back(a);
+    }
+    vector<int> parents;
+    ff(i, 1, n) {
+        if (!visited[i]) {
+            dfs(i);
+            parents.push_back(i);
+        }
+    }
+    if (parents.size() == 1) cout<<0<<nl;
+    else {
+        cout<<parents.size()-1<<nl;
+        ff(i, 1, parents.size()-1) cout<<parents[i-1]<<" "<<parents[i]<<nl;
+    }
 }
 
 signed main() {
     fast();
     int tt = 1; 
-    cin>>tt;
+//    cin>>tt;
     while (tt--) solve();
 }

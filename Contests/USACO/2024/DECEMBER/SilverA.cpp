@@ -39,8 +39,36 @@ void fast(const string &file = "") {
     #endif
 }
 
-void solve() {
+void tlewa() {
+    int n; cin>>n; vector<int> cakes(n); loop(x, cakes) cin>>x;
+    vector<int> prefix_sum(n+1, 0);
+    ff(i, 0, n-1) prefix_sum[i+1] = prefix_sum[i] + cakes[i];
+    vector<vector<int>> dp(n, vector<int>(n, 0));
+    ff(i, 0, n-1) dp[i][i] = cakes[i];
+    ff(len, 2, n) {
+        ff(i, 0, n-len) {
+            int j = i+len-1, sm = prefix_sum[j+1] - prefix_sum[i];
+            dp[i][j] = max(sm-dp[i+1][j], sm-dp[i][j-1]);
+        }
+    }
+    cout<<dp[0][n-1]<<" ";
+    cout<<prefix_sum[n]-dp[0][n-1]<<nl;
+}
 
+void solve() {
+    int n; cin>>n; vector<int> cakes(n); loop(x, cakes) cin>>x;
+    int k = n/2-1; k = max(0LL, k);
+    vector<int> prefix_sum(n+1, 0);
+    ff(i, 0, n-1) prefix_sum[i+1] = prefix_sum[i] + cakes[i];
+    vector<int> suffix_sum(n+1, 0);
+    fb(i, n-1, 0) suffix_sum[n-i] = suffix_sum[n-i-1] + cakes[i];
+    int e = 0;
+    ff(i, 0, k) {
+        if (i > n || (k-i) > n) continue;
+        e = max(prefix_sum[i] + suffix_sum[k - i], e);
+    }
+    int b = prefix_sum[n] - e;
+    cout << b << " " << e << nl;
 }
 
 signed main() {

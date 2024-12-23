@@ -1,7 +1,7 @@
 // Author: Yu Xuan
 // Created On: 15 12 2024 - 19:53:38
 // File: PolygonArea
-// Link: 
+// Link: https://cses.fi/problemset/task/2191
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -39,13 +39,24 @@ void fast(const string &file = "") {
     #endif
 }
 
-void solve() {
+struct p {
+    int x, y;
+        };
 
+void solve() {
+    int n; cin>>n; vector<p> points(n);
+    loop(point, points) cin>>point.x>>point.y;
+    int area = 0;
+    ff(i, 0, n-1) {
+        int j = (i+1)%n;
+        area += (points[i].x*points[j].y - points[j].x*points[i].y);
+    }
+    cout<<abs(area)<<nl;
 }
 
 signed main() {
     fast();
-    int tt = 1; 
-    cin>>tt;
+    int tt = 1;
+//    cin>>tt;
     while (tt--) solve();
 }

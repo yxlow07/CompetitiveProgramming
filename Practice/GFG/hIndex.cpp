@@ -1,7 +1,7 @@
 // Author: Yu Xuan
 // Created On: 06 12 2024 - 19:50:52
 // File: hIndex
-// Link: 
+// Link: https://www.geeksforgeeks.org/problems/find-h-index--165609/1
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -26,7 +26,14 @@ void fast(const string &file = "") {
 }
 
 void solve() {
-
+    int n; cin>>n; vector<int> citations(n);
+    loop(c, citations) cin>>c;
+    sort(citations.begin(), citations.end(), greater<int>());
+    int h = 0;
+    ff(i, 0, n-1) {
+        if (citations[i] >= i+1) h = i+1;
+    }
+    cout<<h<<nl;
 }
 
 signed main() {

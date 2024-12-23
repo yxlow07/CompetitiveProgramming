@@ -1,7 +1,7 @@
 // Author: Yu Xuan
 // Created On: 27 11 2024 - 00:10:15
 // File: A
-// Link: 
+// Link: https://atcoder.jp/contests/abc381/tasks/abc381_a
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -26,11 +26,28 @@ void fast(const string &file = "") {
 }
 
 void solve() {
-
+    int n; cin>>n;
+    string s; cin>>s; int t = s.size();
+    if (n % 2 == 0 ) cout<<"No"<<nl;
+    else {
+        int mid = (t) / 2;
+        bool flag = (bool)(s[mid] == '/');
+        if (!flag) cout<<"No"<<nl;
+        else {
+            ff(i, 0, mid-1) {
+                if (s[i] != '1') flag = false;
+            }
+            ff(i, mid+1, t-1) {
+                if (s[i] != '2') flag = false;
+            }
+            if (flag) cout<<"Yes"<<nl;
+            else cout<<"No"<<nl;
+        }
+    }
 }
 
 signed main() {
     fast();
-    int tt = 1; cin>>tt;
+    int tt = 1; //cin>>tt;
     while (tt--) solve();
 }

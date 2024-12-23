@@ -62,6 +62,7 @@ signed main() {
         int high = 5 * power_P_minus_1 - 1;
         a.emplace_back(low, high);
     }
+    debug(a);
     int tt = 1; 
     cin>>tt;
     while (tt--) solve();

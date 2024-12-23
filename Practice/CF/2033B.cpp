@@ -1,7 +1,7 @@
 // Author: Yu Xuan
 // Created On: 04 12 2024 - 21:42:21
 // File: 2033B
-// Link: 
+// Link: https://codeforces.com/contest/2033/problem/B
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -26,7 +26,32 @@ void fast(const string &file = "") {
 }
 
 void solve() {
-
+    int n; cin>>n; int grid[n][n];
+    ff(i, 0, n-1) {
+        ff(j, 0, n-1) {
+            cin>>grid[i][j];
+        }
+    }
+    int ans = 0, idx = 1;
+    // loop through all diagonals of nxn grid
+    ff(i, 0, n-1) {
+        int mn = 1e9, r = n-idx, c = 0;
+        while (r < n && c < n) {
+            mn = min(mn, grid[r][c]);
+            r++; c++;
+        }
+        idx++;
+        if (mn < 0) ans -= mn;
+    }
+    ff(i, 1, n-1) {
+        int mn = 1e9, r = 0, c = i;
+        while (r < n && c < n) {
+            mn = min(mn, grid[r][c]);
+            r++; c++;
+        }
+        if (mn < 0) ans -= mn;
+    }
+    cout<<ans<<nl;
 }
 
 signed main() {

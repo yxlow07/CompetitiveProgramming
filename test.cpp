@@ -16,7 +16,7 @@ using namespace std;
 #define nl '\n'
 
 #ifndef ONLINE_JUDGE
-#define debug(x) cerr << #x <<" "; _print(x); cerr << endl;
+
 #else
 #define debug(x)
 #endif

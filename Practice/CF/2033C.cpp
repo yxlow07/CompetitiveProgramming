@@ -1,7 +1,7 @@
 // Author: Yu Xuan
 // Created On: 04 12 2024 - 21:56:42
 // File: 2033C
-// Link: 
+// Link: https://codeforces.com/contest/2033/problem/C
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -26,7 +26,10 @@ void fast(const string &file = "") {
 }
 
 void solve() {
-
+    int n; cin>>n; int a[n]; loop(i, a) cin>>i;
+    ff(i, 0, n-1) {
+        
+    }
 }
 
 signed main() {

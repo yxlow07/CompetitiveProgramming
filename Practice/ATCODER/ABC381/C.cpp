@@ -1,7 +1,7 @@
 // Author: Yu Xuan
 // Created On: 27 11 2024 - 00:33:35
 // File: C
-// Link: 
+// Link: https://atcoder.jp/contests/abc381/tasks/abc381_c
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -26,7 +26,27 @@ void fast(const string &file = "") {
 }
 
 void solve() {
-
+    int n; cin>>n; string s; cin>>s;
+    int ans = 0;
+    ff(i, 0, n-1) {
+        if (s[i] == '/') {
+            // Start search
+            int l = i-1, r = i+1, local_sum = 1;
+            if (l < 0 || r >= n) {
+                ans = max(ans, local_sum);
+                continue;
+            }
+            while (l >= 0 && r <= n && l < r) {
+                if (s[l--] == '1' && s[r++] == '2') {
+                    local_sum += 2;
+                } else {
+                    break;
+                }
+            }
+            ans = max(ans, local_sum);
+        }
+    }
+    cout<<ans<<nl;
 }
 
 signed main() {

@@ -1,7 +1,7 @@
 // Author: Yu Xuan
 // Created On: 07 12 2024 - 17:49:41
 // File: 2050D
-// Link: 
+// Link: https://codeforces.com/contest/2050/problem/D
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -26,7 +26,21 @@ void fast(const string &file = "") {
 }
 
 void solve() {
-
+    string s; cin>>s; int n = s.size();
+    ff(i, 0, n-1) {
+        int best = s[i] - '0', newPos = i;
+        ff(j, 1, 10) {
+            if ((i+j) >= n) break;
+            int nw = (int)(s[i+j] - '0') - j;
+            if (nw > best) best = nw, newPos = i+j;
+        }
+        while (newPos > i) {
+            swap(s[newPos], s[newPos-1]);
+            newPos--;
+        }
+        s[i] = (char)(best + '0');
+    }
+    cout<<s<<nl;
 }
 
 signed main() {

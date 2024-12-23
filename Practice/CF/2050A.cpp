@@ -1,7 +1,7 @@
 // Author: Yu Xuan
 // Created On: 07 12 2024 - 11:16:01
 // File: 2050A
-// Link: 
+// Link: https://codeforces.com/contest/2050/problem/A
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -26,7 +26,15 @@ void fast(const string &file = "") {
 }
 
 void solve() {
-
+    int n, m; cin>>n>>m;
+    string words[n]; loop(w, words) cin>>w;
+    int ans = 0;
+    ff(i, 0, n-1) {
+        int len = words[i].size();
+        if (m-len >= 0) m-=len, ans++;
+        else break;
+    }
+    cout<<ans<<nl;
 }
 
 signed main() {

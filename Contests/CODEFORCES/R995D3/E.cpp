@@ -39,8 +39,104 @@ void fast(const string &file = "") {
     #endif
 }
 
-void solve() {
+struct FenwickTree {
+    int size; vector<int> tree;
 
+    FenwickTree(int n) : size(n), tree(n + 2, 0) {}
+
+    void update(int idx, int value = 1) {
+        while (idx <= size) {
+            tree[idx] += value;
+            idx += idx & (-idx);
+        }
+    }
+
+    int query(int idx) const {
+        int res = 0;
+        int i = idx;
+        while (i > 0) {
+            res += tree[i];
+            i -= i & (-i);
+        }
+        return res;
+    }
+
+    int query_range(int idx) const {
+        return query(size) - query(idx - 1);
+    }
+};
+
+void tle() {
+    int n,k; cin>>n>>k; vector<int> a(n), b(n);
+    ff(i, 0, n-1) cin>>a[i];
+    ff(i, 0, n-1) cin>>b[i];
+
+    vector<int> p = a;
+    p.insert(p.end(), b.begin(), b.end()); sort(p.begin(), p.end());
+    p.erase(unique(p.begin(), p.end()), p.end());
+
+    vector<pair<int,int>> customers(n);
+    ff(i, 0, n-1) customers[i] = {a[i], b[i]};
+    sort(customers.begin(), customers.end(), [&](const pair<int, int> &x, const pair<int, int> &y) -> bool{
+        if(x.first != y.first) return x.first < y.first;
+        return x.second < y.second;
+    });
+    multiset<int> included; int mx = 0, l = 0;
+    sort(a.begin(), a.end());
+    sort(b.begin(), b.end());
+    loop(c, p) {
+        while (l < n && customers[l].first < c) {
+            included.insert(customers[l].second);
+            l++;
+        }
+        int buy = b.end() - lower_bound(b.begin(), b.end(), c);
+        int neg = distance(included.lower_bound(c), included.end());
+
+        if (neg <= k) {
+            int earn = c * buy;
+            if (earn > mx) mx = earn;
+        }
+    }
+    cout<<mx<<nl;
+}
+
+void solve() {
+    int n,k; cin>>n>>k; vector<int> a(n), b(n);
+    ff(i, 0, n-1) cin>>a[i];
+    ff(i, 0, n-1) cin>>b[i];
+
+    vector<int> p = a;
+    p.insert(p.end(), b.begin(), b.end()); sort(p.begin(), p.end());
+    p.erase(unique(p.begin(), p.end()), p.end());
+
+    vector<pair<int,int>> customers(n);
+    ff(i, 0, n-1) customers[i] = {a[i], b[i]};
+    sort(customers.begin(), customers.end(), [&](const pair<int, int> &x, const pair<int, int> &y) -> bool {
+        if(x.first != y.first) return x.first < y.first;
+        return x.second < y.second;
+    });
+
+    // find unique elements
+    sort(b.begin(), b.end());
+    vector<int> uq = b; uq.erase(unique(uq.begin(), uq.end()), uq.end());
+
+    FenwickTree ft(uq.size()); int mx = 0, l = 0;
+    loop(c, p) {
+        while (l < n && customers[l].first < c) {
+            int curr = customers[l].second, rank = lower_bound(uq.begin(), uq.end(), curr) - uq.begin() + 1;
+            ft.update(rank);
+            l++;
+        }
+        // find neg reviews
+        int pos = lower_bound(uq.begin(), uq.end(), c) - uq.begin() + 1, neg = 0;
+        if (pos <= uq.size()) neg = ft.query_range(pos);
+        if (neg <= k) {
+            int buy = n - (lower_bound(b.begin(), b.end(), c)-b.begin());
+            int earn = c * buy;
+            if (earn > mx) mx = earn;
+        }
+    }
+    cout<<mx<<nl;
 }
 
 signed main() {

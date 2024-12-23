@@ -1,7 +1,7 @@
 // Author: Yu Xuan
 // Created On: 09 12 2024 - 22:03:21
 // File: CountDivisors
-// Link: 
+// Link: https://cses.fi/problemset/task/1713
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -39,13 +39,37 @@ void fast(const string &file = "") {
     #endif
 }
 
-void solve() {
+bool vis[1000001]; int precompute[1000001];
 
+void solve() {
+    int n, ori; cin>>n; ori = n;
+    if (vis[n]) {
+        cout<<precompute[n]<<nl;
+        return;
+    }
+    // Find prime divisors of n
+    vector<int> divisors;
+    for (int i = 2; i*i <= n; i++) {
+        if (n%i == 0) {
+            int x = 0;
+            while (n%i == 0) n /= i, x++;
+            divisors.push_back(x);
+        }
+    }
+    int ans = (n>1) ? 2 : 1;
+    loop(a, divisors) {
+        ans *= (a+1);
+    }
+    cout<<ans<<nl;
+    precompute[ori] = ans;
+    vis[ori] = true;
 }
 
 signed main() {
     fast();
     int tt = 1; 
     cin>>tt;
+    memset(vis, 0, sizeof(vis));
+    memset(precompute, false, sizeof(precompute));
     while (tt--) solve();
 }

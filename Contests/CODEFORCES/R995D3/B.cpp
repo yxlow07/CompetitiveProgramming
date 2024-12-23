@@ -40,7 +40,12 @@ void fast(const string &file = "") {
 }
 
 void solve() {
-
+    int n,a[3]; cin>>n>>a[0]>>a[1]>>a[2];
+    int sm = a[0]+a[1]+a[2], days = (n / sm) * 3, rem = n % sm, i = 0;
+    while (rem > 0) {
+        days++; rem -= a[i++];
+    }
+    cout<<days<<nl;
 }
 
 signed main() {

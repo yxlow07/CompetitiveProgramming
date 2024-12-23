@@ -40,7 +40,17 @@ void fast(const string &file = "") {
 }
 
 void solve() {
-
+    int n,x,y; cin>>n>>x>>y; int a[n], sm = 0;
+    ff(i, 0, n-1) cin>>a[i], sm += a[i];
+    int lb = sm-y, ub = sm-x, count = 0;
+    sort(a, a+n);
+    ff(i, 0, n-1) {
+        int llb = lb - a[i], uub = ub - a[i];
+        int left = lower_bound(a+i+1, a+n, llb) - a;
+        int right = upper_bound(a+i+1, a+n, uub) - a;
+        if (left < n && right > left) count += right - left;
+    }
+    cout<<count<<nl;
 }
 
 signed main() {

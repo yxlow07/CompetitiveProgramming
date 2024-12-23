@@ -1,7 +1,7 @@
 // Author: Yu Xuan
 // Created On: 16 12 2024 - 21:05:58
 // File: MessageRoute
-// Link: 
+// Link: https://cses.fi/problemset/task/1667
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -40,12 +40,39 @@ void fast(const string &file = "") {
 }
 
 void solve() {
-
+    int n, m, a, b; cin>>n>>m; vector<vector<int>> adj(n+1);
+    ff(i, 1, m) {
+        cin>>a>>b;
+        adj[a].push_back(b); adj[b].push_back(a);
+    }
+    vector<int> dist(n+1, -1); queue<int> q; q.push(1); dist[1] = 0; vector<int> parent(n+1, -1); parent[1] = 0;
+    while (!q.empty()) {
+        int curr = q.front(); q.pop();
+        loop(neigh, adj[curr]) {
+            if (dist[neigh] == -1) {
+                parent[neigh] = curr;
+                dist[neigh] = dist[curr]+1;
+                q.push(neigh);
+            }
+        }
+    }
+    if (dist[n] == -1) {
+        cout<<"IMPOSSIBLE"<<nl;
+        return;
+    }
+    cout<<dist[n]+1<<nl;
+    vector<int> path; int curr = n;
+    while (curr != 0) {
+        path.push_back(curr);
+        curr = parent[curr];
+    }
+    reverse(path.begin(), path.end());
+    loop(p, path) cout<<p<<" ";
 }
 
 signed main() {
     fast();
     int tt = 1; 
-    cin>>tt;
+//    cin>>tt;
     while (tt--) solve();
 }

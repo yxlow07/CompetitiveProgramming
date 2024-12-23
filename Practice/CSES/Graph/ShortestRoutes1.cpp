@@ -1,7 +1,7 @@
 // Author: Yu Xuan
 // Created On: 17 12 2024 - 16:05:51
 // File: ShortestRoutes1
-// Link: 
+// Link: https://cses.fi/problemset/task/1671
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -39,13 +39,53 @@ void fast(const string &file = "") {
     #endif
 }
 
-void solve() {
+void tle() {
+    int n, m, a, b, c; cin>>n>>m; vector<vector<pair<int, int>>> adj(n+1);
+    ff(i, 1, m) {
+        cin>>a>>b>>c;
+        adj[a].emplace_back(b, c);
+    }
+    vector<int> dist(n+1, 1e18); dist[1] = 0;
+//    vector<int> p(n+1, -1);
+    vector<bool> marked(n+1, false);
+    ff(i, 1, n) {
+        int v = -1;
+        ff(j, 1, n) {
+            if (!marked[j] && (v == -1 || dist[j] < dist[v])) v = j;
+        }
+        if (dist[v] == 1e18) break;
+        marked[v] = true;
+        for (auto [to, len] : adj[v]) {
+            dist[to] = min(dist[to], dist[v]+len);
+        }
+    }
 
+    ff(i, 1, n) cout<<dist[i]<<" ";
+}
+
+void solve() {
+    int n, m, a, b, c; cin>>n>>m; vector<vector<pair<int, int>>> adj(n+1);
+    ff(i, 1, m) {
+        cin >> a >> b >> c;
+        adj[a].emplace_back(b, c);
+    }
+    vector<int> dist(n+1, 1e18); dist[1] = 0; set<pair<int, int>> s; s.insert({0, 1});
+    while (!s.empty()) {
+        int v = s.begin()->second; s.erase(s.begin());
+        for (auto [to, len] : adj[v]) {
+            if (dist[v]+len < dist[to]) {
+                s.erase({dist[to], to});
+                dist[to] = dist[v]+len;
+                s.insert({dist[to], to});
+            }
+        }
+    }
+    ff(i, 1, n) cout<<dist[i]<<" ";
 }
 
 signed main() {
     fast();
     int tt = 1; 
-    cin>>tt;
+//    cin>>tt;
     while (tt--) solve();
 }

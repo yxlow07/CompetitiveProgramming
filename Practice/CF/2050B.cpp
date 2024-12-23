@@ -1,7 +1,7 @@
 // Author: Yu Xuan
 // Created On: 07 12 2024 - 11:23:03
 // File: 2050B
-// Link: 
+// Link: https://codeforces.com/contest/2050/problem/B
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -26,7 +26,32 @@ void fast(const string &file = "") {
 }
 
 void solve() {
-
+    int n; cin>>n; int nums[n], sm = 0; loop(num, nums) cin>>num, sm += num;
+    if (sm % n != 0) {
+        cout<<"NO"<<nl;
+        return;
+    }
+    int avg = sm / n, diff = 0;
+    ff(i, 1, n-2) {
+        if (nums[i-1] > avg) {
+            diff = nums[i-1]-avg;
+            nums[i+1] += diff;
+            nums[i-1] -= diff;
+        } else if (nums[i-1] < avg) {
+            diff = avg-nums[i-1];
+            nums[i+1] -= diff;
+            nums[i-1] += diff;
+        }
+    }
+    bool flag = true;
+    loop(num, nums) {
+        if (num != avg) {
+            flag = false;
+            break;
+        }
+    }
+    if (flag) cout<<"YES"<<nl;
+    else cout<<"NO"<<nl;
 }
 
 signed main() {

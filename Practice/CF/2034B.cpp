@@ -1,7 +1,7 @@
 // Author: Yu Xuan
 // Created On: 02 12 2024 - 21:20:30
 // File: 2034B
-// Link: 
+// Link: https://codeforces.com/contest/2034/problem/B
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -26,7 +26,20 @@ void fast(const string &file = "") {
 }
 
 void solve() {
+    int n,m,k; cin>>n>>m>>k;
+    string s; cin>>s;
 
+    int curr = 0, ans = 0;
+    ff(i, 0, n-1) {
+        if (s[i] == '0') {
+            curr++;
+            if (curr >= m) ans++, curr = 0, i += k-1;
+        }
+        else {
+            curr = 0;
+        }
+    }
+    cout<<ans<<nl;
 }
 
 signed main() {

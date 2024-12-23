@@ -40,7 +40,20 @@ void fast(const string &file = "") {
 }
 
 void solve() {
+    int n; cin>>n; int a[n], b[n];
+    ff(i, 0, n-1) cin>>a[i];
+    ff(i, 0, n-1) cin>>b[i];
 
+    int m = 0, s = 0;
+
+    ff(i, 0, n-1) {
+        if (i != n-1) {
+            if (a[i] > b[i+1]) m += a[i], s += b[i+1];
+        } else {
+            m += a[i];
+        }
+    }
+    cout<<m-s<<nl;
 }
 
 signed main() {

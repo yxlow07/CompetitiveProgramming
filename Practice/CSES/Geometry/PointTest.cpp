@@ -1,7 +1,7 @@
 // Author: Yu Xuan
 // Created On: 19 12 2024 - 20:18:16
-// File: PointTest
-// Link: 
+// File: PointLocationTest
+// Link: https://cses.fi/problemset/task/2189
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -40,7 +40,25 @@ void fast(const string &file = "") {
 }
 
 void solve() {
-
+    int x1, x2, x3, y1, y2, y3; cin>>x1>>y1>>x2>>y2>>x3>>y3;
+    // Case 1: They intersect, calculate area of the triangle == 0
+    int area = abs(x1*(y2-y3) + x2*(y3-y1) + x3*(y1-y2)), area1;
+    if (area == 0) {
+        cout<<"TOUCH"<<nl;
+    } else {
+        int m = (y2-y1) / (x2-x1);
+        if (m > 0) {
+            if (x2 > x1) swap(x1, x2), swap(y1, y2);
+        } else {
+            if (x1 > x2) swap(x1, x2), swap(y1, y2);
+        }
+        area1 = (x1*(y2-y3) + x2*(y3-y1) + x3*(y1-y2));
+        if (area1 > 0) {
+            cout<<"LEFT"<<nl;
+        } else {
+            cout<<"RIGHT"<<nl;
+        }
+    }
 }
 
 signed main() {

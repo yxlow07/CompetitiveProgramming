@@ -40,7 +40,27 @@ void fast(const string &file = "") {
 }
 
 void solve() {
-
+    int n,m,k; cin>>n>>m>>k;
+    int a[m], know[k], miss = n-k; vector<char> pass(m, '0'); int gone = -1;
+    ff(i, 0, m-1) cin>>a[i];
+    ff(i, 0, k-1) cin>>know[i];
+    sort(know, know+k);
+    if (miss == 1) {
+        int sm = accumulate(know, know+k, 0LL);
+        gone = n*(n+1)/2 - sm;
+    }
+    ff(i, 0, m-1) {
+        if (miss > 1) continue;
+        else if (miss == 1) {
+            if (a[i] == gone) pass[i] = '1';
+        } else {
+            pass[i] = '1';
+        }
+    }
+    ff(i, 0, m-1) {
+        cout<<pass[i];
+    }
+    cout<<nl;
 }
 
 signed main() {
