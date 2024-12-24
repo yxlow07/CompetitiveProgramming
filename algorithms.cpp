@@ -38,6 +38,18 @@ struct FenwickTree {
     }
 };
 
+void solve() {}
+
 signed main() {
+    int tt = 1;
+    #ifdef LOCAL
+        auto start = chrono::high_resolution_clock::now();
+        cerr<<"Test case "<<tt<<nl;
+    #endif
+        while (tt--) solve();
+    #ifdef LOCAL
+        auto end = chrono::high_resolution_clock::now();
+        cerr<<chrono::duration_cast<chrono::milliseconds>(end-start).count()<<"ms"<<nl;
+    #endif
     return 0;
 }
