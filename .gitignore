@@ -2,3 +2,5 @@
 *.exe
 *.dll
 /.vscode
+/.cph
+*/.cph

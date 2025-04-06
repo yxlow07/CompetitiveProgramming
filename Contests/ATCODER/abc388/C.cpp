@@ -33,12 +33,20 @@ void fast(const string &file = "") {
 }
 
 void solve() {
+    in(n);
+    inVec(a, n);
 
+    int ans = 0;
+    ff(i, 0, n-1) {
+        int pos = upper_bound(a.begin(), a.begin()+i, a[i]/2) - a.begin();
+        ans += pos;
+    }
+    cout<<ans<<nl;
 }
 
 signed main() {
     fast();
     int tt = 1; 
-    cin>>tt;
+//    cin>>tt;
     while (tt--) solve();
 }

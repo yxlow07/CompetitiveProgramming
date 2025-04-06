@@ -40,7 +40,27 @@ void fast(const string &file = "") {
 }
 
 void solve() {
-
+    int n, k; cin>>n>>k;
+    if (n < k) cout<<0<<nl;
+    else {
+        int sm = 0; pair<int,int> stack[32]; int top = 0;
+        stack[top++] = {1, n};
+        while (top > 0) {
+            pair<int,int> p = stack[--top];
+            int l = p.first, r = p.second;
+            int len = r-l+1, m = (l+r)/2;
+            if (len < k) continue;
+            if (len & 1) {
+                sm += m;
+                if (m+1 <= r) stack[top++] = {m+1, r};
+                if (l <= m-1) stack[top++] = {l, m-1};
+            } else {
+                if (m+1 <= r) stack[top++] = {m+1, r};
+                if (l <= m) stack[top++] = {l, m};
+            }
+        }
+        cout<<sm<<nl;
+    }
 }
 
 signed main() {

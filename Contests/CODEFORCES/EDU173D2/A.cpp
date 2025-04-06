@@ -39,13 +39,24 @@ void fast(const string &file = "") {
     #endif
 }
 
-void solve() {
+int c4[41], c2[41];
 
+void solve() {
+    int n; cin>>n;
+    // find max such that 4^x <= n
+    ff(i, 0, 40) {
+        if (c4[i] > n) {
+            cout<<c2[i-1]<<nl;
+            break;
+        }
+    }
 }
 
 signed main() {
     fast();
     int tt = 1; 
     cin>>tt;
+    c4[0] = c2[0] = 1;
+    ff(i, 1, 41) c4[i] = c4[i-1]*4, c2[i] = c2[i-1]*2;
     while (tt--) solve();
 }

@@ -218,3 +218,139 @@ int closest_binary_search(vi &arr, int sz, int num) {
     }
     ret ans != -1 ? ans+1 : sz+1;
 }
+
+/**
+ * https://atcoder.jp/contests/abc399/tasks/abc399_f
+ * 
+ * Learn how to use math using grok
+ */
+
+ const int mod = 998244353;
+
+int modinv(int a, int m) {
+    int x0 = 0, x1 = 1, m0 = m, temp;
+    if (m == 1) return 0;
+    while (a > 1) {
+        int q = a / m;
+        temp = m;
+        m = a % m, a = temp;
+        temp = x0;
+        x0 = x1 - q * x0;
+        x1 = temp;
+    }
+    if (x1 < 0) x1 += m0;
+    return x1;
+}
+
+void solve() {
+    vi inv(11);
+    ff(i, 1, 10) {
+        inv[i] = modinv(i, mod);
+    }
+    in2(n,k);
+    inVec(a, n);
+    vi pre(n+1, 0);
+    ff(i, 0, n-1) {
+        pre[i+1] = (pre[i] + a[i]) % mod;
+    }
+    vector<vi> pw(k+1, vi(n+1, 0));
+    ff(i, 1, n) {
+        pw[0][i] = 1;
+        ff(j, 1, k) {
+            pw[j][i] = (pw[j-1][i] * pre[i]) % mod;
+        }
+    }
+    vvi cum(k+1, vi(n+1, 0));
+    ff(i, 1, k) {
+        ff(j, 1, n) {
+            cum[i][j] = (cum[i][j-1] + pw[i][j]) % mod;
+        }
+    }
+    vi binom(k+1, 1);
+    ff(i, 1, k) binom[i] = (binom[i-1] * (k-i+1) % mod * inv[i]) % mod;
+    int ans = 0ll;
+    ff(i, 1, n) {
+        int tmp = (i * pw[k][i]) % mod;
+        ff(j, 1, k) {
+            int coeff = (binom[j] * (j % 2 ? mod - 1 : 1)) % mod;
+            if (coeff < 0) coeff += mod;
+            int term = (coeff * pw[k-j][i] % mod * cum[j][i-1]) % mod;
+            tmp = (tmp + term) % mod;
+        }
+        ans = (ans + tmp) % mod;
+    }
+    cout<<ans<<nl;
+}
+
+void noiph2025p1() {
+    in(n);
+    int xmin = LLONG_MAX, xmax = LLONG_MIN;
+    int ymin = LLONG_MAX, ymax = LLONG_MIN;
+    int summin = LLONG_MAX, summax = LLONG_MIN;
+    int diffmin = LLONG_MAX, diffmax = LLONG_MIN;
+
+    ff(i, 0, n-1) {
+        in2(a,b);
+        xmin = min(xmin, a);
+        xmax = max(xmax, a);
+        ymin = min(ymin, b);
+        ymax = max(ymax, b);
+        summin = min(summin, a+b);
+        summax = max(summax, a+b);
+        diffmin = min(diffmin, b-a);
+        diffmax = max(diffmax, b-a);
+    }
+
+    double ans1 = max(xmax-xmin, ymax-ymin);
+    double ans2 = max((double)summax-summin, (double)diffmax-diffmin);
+    cout<<min(ans1*ans1, ans2*ans2/2.0);
+}
+
+void abc400d() {
+    in2(h,w);
+    vector<string> grid(h);
+    ff(i, 0, h-1) cin>>grid[i];
+    in4(x1, y1, x2, y2);
+    x1--; y1--; x2--; y2--;
+    vvi dist(h, vi(w, INT_MAX));
+    dist[x1][y1] = 0;
+
+    deque<pii> dq;
+    dq.push_back({x1, y1});
+
+    vector<pii> directions = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+
+    while (!dq.empty()) {
+        // auto [x, y] = dq.front();
+        int x = dq.front().fi, y = dq.front().se;
+        dq.pop_front();
+        int k = dist[x][y];
+        for (auto & dir : directions) {
+            int dx = dir.fi, dy = dir.se;
+            int nx = x + dx, ny = y + dy;
+            if (nx < 0 || nx >= h || ny < 0 || ny >= w) continue;
+            if (grid[nx][ny] != '.') continue;
+            if (k < dist[nx][ny]) {
+                dist[nx][ny] = k;
+                dq.push_front({nx, ny});
+            }
+        }
+
+        ff(dx, -2, 2) {
+            ff(dy, -2, 2) {
+                int nx = x + dx, ny = y + dy;
+                if (nx < 0 || nx >= h || ny < 0 || ny >= w) continue;
+                if (k + 1 < dist[nx][ny]) {
+                    dist[nx][ny] = k + 1;
+                    dq.push_back({nx, ny});
+                }
+            }
+        }
+    }
+    int finaldist = dist[x2][y2];
+    if (finaldist == INT_MAX) {
+        cout << -1 << nl;
+        return;
+    } 
+    cout << finaldist << nl;
+}

@@ -33,12 +33,13 @@ void fast(const string &file = "") {
 }
 
 void solve() {
-
+    string s; cin>>s;
+    cout<<s[0]<<"UPC"<<nl;
 }
 
 signed main() {
     fast();
-    int tt = 1; 
-    cin>>tt;
+    int tt = 1;
+//    cin>>tt;
     while (tt--) solve();
 }

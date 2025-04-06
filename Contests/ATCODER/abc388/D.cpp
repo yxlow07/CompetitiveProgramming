@@ -33,12 +33,29 @@ void fast(const string &file = "") {
 }
 
 void solve() {
+    in(n);
+    vector<int> a(n+1);
+    ff(i, 1, n) cin>>a[i];
+    vector<int> dp(n+2, 0);
+    vector<int> ans(n+1, 0);
+    ff(i, 1, n) {
+        dp[i] += dp[i-1];
+        int total = a[i] + dp[i], k = min(total, n-i);
+        ans[i] = total - k;
+        if (k > 0) {
+            dp[i+1] += 1;
+            if (i+k+1 <= n) dp[i+k+1] -= 1;
+        }
+    }
 
+    ff(i, 1, n) {
+        cout<<ans[i]<<" ";
+    }
 }
 
 signed main() {
     fast();
     int tt = 1; 
-    cin>>tt;
+//    cin>>tt;
     while (tt--) solve();
 }

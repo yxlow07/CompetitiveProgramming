@@ -33,12 +33,23 @@ void fast(const string &file = "") {
 }
 
 void solve() {
+    in2(n, d);
+    vector<pair<int,int>> a(n);
+    loop(x, a) cin>>x.first>>x.second;
 
+    ff(i, 1, d) {
+        int mx = -1;
+        ff(j, 0, n-1) {
+            int w = a[j].first*(a[j].second+i);
+            mx = max(mx, w);
+        }
+        cout<<mx<<nl;
+    }
 }
 
 signed main() {
     fast();
     int tt = 1; 
-    cin>>tt;
+//    cin>>tt;
     while (tt--) solve();
 }

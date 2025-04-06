@@ -33,7 +33,16 @@ void fast(const string &file = "") {
 }
 
 void solve() {
-
+    int n, m; cin>>n>>m;
+    int l = m, h = m,px,py;
+    ff(i, 0, n-1) {
+        int a, b; cin>>a>>b;
+        if (i == 0) px = a, py = b;
+        l += a, h += b;
+    }
+    l -= px, h -= py;
+    cerr<<l<<" "<<h<<nl;
+    cout<<(l+h)*2<<nl;
 }
 
 signed main() {

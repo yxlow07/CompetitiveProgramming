@@ -40,7 +40,35 @@ void fast(const string &file = "") {
 }
 
 void solve() {
-
+    int n; cin>>n; vector<pair<int,int>> range(n); int mx_x = -1;
+    loop(r, range) {
+        cin>>r.first>>r.second;
+        mx_x = max(mx_x, r.first);
+    }
+    vector<int> cnt(mx_x+2, 0);
+    ff(i, 0, n-1) {
+        if (range[i].first == range[i].second) cnt[range[i].first]++;
+    }
+    vector<int> allowed(mx_x+2, 0);
+    allowed[0] = 0;
+    ff(i, 1, mx_x) {
+        allowed[i] = allowed[i-1] + (cnt[i] == 0 ? 1 : 0);
+    }
+    string s;
+    ff(i, 0, n-1) {
+        if (range[i].first == range[i].second) {
+            s += (cnt[range[i].first] == 1 ? '1' : '0');
+        } else {
+            int li = max(range[i].first, 1LL), ri = min(range[i].second, mx_x);
+            if (li > ri) s+='0';
+            else {
+                int cnt_allowed = allowed[ri] - ((li >1) ? allowed[li -1] : 0);
+                if(cnt_allowed >=1) s += '1';
+                else s += '0';
+            }
+        }
+    }
+    cout<<s<<nl;
 }
 
 signed main() {

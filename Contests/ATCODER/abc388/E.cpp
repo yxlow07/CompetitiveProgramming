@@ -32,13 +32,43 @@ void fast(const string &file = "") {
     #endif
 }
 
-void solve() {
+void wa() {
+    in(n);
+    inVec(a, n);
+    int ans = 0, ub = n;
+    fb(i, n-1, 0) {
+        int r = upper_bound(a.begin(), a.begin()+ub, a[i]/2) - a.begin();
+        if (r > 0) ans++, ub = r-1;
+    }
+    cout<<ans<<nl;
+}
 
+bool ok(int m, vector<int> &a, int n) {
+    ff(i, 0, m-1) {
+        if (a[i] > a[n-m+i]/2) return false;
+    }
+    return true;
+}
+
+void solve() {
+    in(n); inVec(a, n);
+    int l = 0, r = n/2, ans = 0;
+
+    while (l <= r) {
+        int m = l+(r-l)/2;
+        if (ok(m, a, n)) {
+            ans = m;
+            l = m+1;
+        } else {
+            r = m-1;
+        }
+    }
+    cout<<ans<<nl;
 }
 
 signed main() {
     fast();
     int tt = 1; 
-    cin>>tt;
+//    cin>>tt;
     while (tt--) solve();
 }

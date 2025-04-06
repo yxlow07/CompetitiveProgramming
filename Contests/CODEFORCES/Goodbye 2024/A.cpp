@@ -40,7 +40,29 @@ void fast(const string &file = "") {
 }
 
 void solve() {
-
+    int n; cin>>n; vector<int> a(n); loop(x, a) cin>>x;
+    vector<vector<bool>> stable(n+1, vector<bool>(n+1, false));
+    ff(i, 1, n) {
+        int mn = a[i-1], mx = a[i-1];
+        ff(j, i, n) {
+            if (j > i) mn = min(mn, a[j-1]), mx = max(mx, a[j-1]);
+            stable[i][j] = (2 * mn > mx);
+        }
+    }
+    vector<int> dp(n+1, 0);
+    dp[0] = 1;
+    ff(i, 1, n) {
+        int total = 0;
+        ff(j, 0, i-1) {
+            if (stable[j+1][i]) total += dp[j];
+            if (total >= 2) {
+                total = 2;
+                break;
+            }
+        }
+        dp[i] = total;
+    }
+    cout<<(dp[n] >= 2 ? "YES" : "NO")<<nl;
 }
 
 signed main() {

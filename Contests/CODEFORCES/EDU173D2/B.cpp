@@ -40,7 +40,19 @@ void fast(const string &file = "") {
 }
 
 void solve() {
-
+    int n,d; cin>>n>>d; set<int> ans; ans.insert(1);
+    // Given number d repeats for n! times, which of 1,3,5,7,9 can divide the number
+    // Case 1: 5
+    if (d == 5 || d == 0) ans.insert(5);
+    // Case 2: 3
+    if (d % 3 == 0 || n >= 3) ans.insert(3);
+    // Case 3: 7
+    if (d % 7 == 0 || n >= 3) ans.insert(7);
+    // Case 4: 9
+    if (d % 9 == 0 || (n >= 6 || (n == 2 && d%9 == 0))) ans.insert(9);
+    else if (3 <= n && n < 6 && d % 3 == 0) ans.insert(9);
+    loop(c, ans) cout<<c<<" ";
+    cout<<nl;
 }
 
 signed main() {

@@ -39,7 +39,61 @@ void fast(const string &file = "") {
     #endif
 }
 
+auto compute_subarray_sums(int start, int end, vector<int> a) -> vector<long long> {
+    vector<int> sums;
+    // Using prefix sums to compute all possible subarray sums
+    vector<int> prefix(end - start + 2, 0);
+    ff(i, start, end-1) prefix[i - start +1] = prefix[i - start] + a[i];
+    ff(i, 0, end-start) {
+        ff(j, i+1, end-start) {
+            sums.push_back(prefix[j] - prefix[i]);
+        }
+    }
+    return sums;
+}
+
 void solve() {
+    int n; cin>>n; vector<int> a(n); int p = -1, x = -1;
+    ff(i, 0, n-1) {
+        cin>>a[i];
+        if (abs(a[i]) != 1) p = i, x = a[i];
+    }
+    vector<int> ans; ans.push_back(0);
+    if (p != -1) {
+        if (p > 0) {
+            vector<int> left = compute_subarray_sums(0, p, a);
+            ans.insert(ans.end(), left.begin(), left.end());
+        }
+        if (p < n-1) {
+            vector<int> right = compute_subarray_sums(p+1, n, a);
+            ans.insert(ans.end(), right.begin(), right.end());
+        }
+        vector<int> left = {0}, right = {0}; int s = 0;
+        fb(i, p-1, 0) {
+            s += a[i];
+            left.push_back(s);
+        }
+        s = 0;
+        ff(i, p+1, n-1) {
+            s += a[i];
+            right.push_back(s);
+        }
+        loop(l, left) {
+            loop(r, right) {
+                ans.push_back(x+l+r);
+            }
+        }
+    } else {
+        int t = 0, mn_s = 0, mx_s = 0;
+        loop(c, a) t += c, mn_s = min(mn_s, t), mx_s = max(mx_s, t);
+        ff(i, mn_s, mx_s) ans.push_back(i);
+        ans.push_back(0);
+    }
+    sort(ans.begin(), ans.end());
+    ans.erase(unique(ans.begin(), ans.end()), ans.end());
+    cout<<ans.size()<<nl;
+    loop(c, ans) cout<<c<<" ";
+    cout<<nl;
 
 }
 

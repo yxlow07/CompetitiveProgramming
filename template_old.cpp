@@ -73,12 +73,13 @@ void fast(const string &file = "") {
     cout<<fixed<<setprecision(12); // Set precision for double outputting
     cerr<<fixed<<setprecision(12);
     if (!file.empty()) { (void) !freopen((file + ".in").c_str(), "r", stdin); (void) !freopen((file + ".out").c_str(), "w", stdout); }
-    #ifndef ONLINE_JUDGE
-        string current_path = filesystem::current_path().string();
-        freopen((current_path+"/inp.txt").c_str(), "r", stdin);
-        freopen((current_path+"/out.txt").c_str(), "w", stdout);
-        freopen((current_path+"/err.txt").c_str(), "w", stderr);
-    #endif
+#ifdef LOCAL
+#include <filesystem>
+    const string current_path = filesystem::current_path().string();
+    freopen((current_path + "/inp.txt").c_str(), "r", stdin);
+    freopen((current_path + "/out.txt").c_str(), "w", stdout);
+    freopen((current_path + "/err.txt").c_str(), "w", stderr);
+#endif
 }
 
 void solve() {

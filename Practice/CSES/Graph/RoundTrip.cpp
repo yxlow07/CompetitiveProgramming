@@ -1,7 +1,7 @@
 // Author: Yu Xuan
 // Created On: 01 01 2025 - 00:25:45
 // File: RoundTrip
-// Link: 
+// Link: https://cses.fi/problemset/task/1669
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -32,13 +32,60 @@ void fast(const string &file = "") {
     #endif
 }
 
-void solve() {
+bool found = false;
+vector<bool> visited(100001, false);
 
+void printResult(int node, vector<int> &path) {
+    found = true;
+    int count = 1;
+    string result = "";
+    result += to_string(node) + " ";
+    for (int i = path.size() - 1; i >= 0; i--) {
+        result += to_string(path[i]);
+        count++;
+        if (path[i] == node)
+            break;
+        else
+            result += " ";
+    }
+    cout << to_string(count) << "\n" << result << endl;
+}
+
+void dfs(int node, int parent, vector<int> &path, vector<vector<int>> &adj) {
+    if (found) return;
+    if (visited[node]) {
+        if (path.size() > 2) printResult(node, path);
+        return;
+    }
+    visited[node] = true;
+    path.push_back(node);
+    loop(neigh, adj[node]) {
+        if (neigh == parent) continue;
+        dfs(neigh, node, path, adj);
+    }
+    path.pop_back();
+}
+
+void solve() {
+    in2(n, m);
+    vector<vector<int>> adj(n+1); int a,b;
+    ff(i, 1, m) {
+        cin>>a>>b;
+        adj[a].push_back(b);
+        adj[b].push_back(a);
+    }
+    ff(i, 1, n) {
+        if (!visited[i]) {
+            vector<int> path;
+            dfs(i, -1, path, adj);
+        }
+    }
+    if (!found) cout<<"IMPOSSIBLE"<<nl;
 }
 
 signed main() {
     fast();
     int tt = 1; 
-    cin>>tt;
+//    cin>>tt;
     while (tt--) solve();
 }
