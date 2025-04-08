@@ -12,7 +12,7 @@ using namespace std;
 #define sp ' '
 #define in(n) int n; cin>>n;
 #define in2(n, m) int n, m; cin>>n>>m;
-#define in3(n, m, k) int n, k; string m; cin>>n>>m>>k;
+#define in3(n, m, k) int n, k, m; cin>>n>>m>>k;
 #define in4(n, m, k, l) int n, m, k, l; cin>>n>>m>>k>>l;
 #define in5(n, m, k, l, o) int n, m, k, l, o; cin>>n>>m>>k>>l>>o;
 #define ins(s) string s; cin>>s;
